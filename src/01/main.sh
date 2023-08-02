@@ -1,12 +1,15 @@
 #!/bin/bash
 . ./validator.sh
+. ./generate_name.sh
 
 valid $1 $2 $3 $4 $5 $6
 if [ $? -eq 1 ]; then
     exit 1
 fi
 
+nameGen "xxx" $3
 
+echo $res
 
 
 for (( i=1; i <= 4; i++ )) do
