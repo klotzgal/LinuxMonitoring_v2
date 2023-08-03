@@ -15,17 +15,16 @@ nameGen() {
 
     res=""
     # res=${res// /} # замена пробелов на ничто
-    limit=$((249 - ${#arr[@]}))
+    limit=$((250 - ${#arr[@]}))
     
-# первый способ записи макс имени
     j=0
     pref=""
     letter=${arr[$j]}
-    echo pref = $pref
     postf="${arr[@]}_$(date "+%d%m%y")"
     postf=${postf// /}
     postf=${postf:1}
     count=0
+    complete_leters=""
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             res=$letter$res
@@ -34,18 +33,33 @@ nameGen() {
                 break
             fi
         done
-        echo $pref$res$postf
-        pref=$pref${arr[$j]}
-        j=$(($j + 1))
-        letter=${arr[$j]}
-        postf=${postf:1}
+        # echo "$pref[$res]$postf"
+        # увеличение префикса и уменьшения предела
+        if ([ $limit -gt 2 ] && [ $j -ne 0 ]) then
+            pref=$pref${arr[$(($j - 1))]}
+            limit=$(($limit - 1))
+        # если префикс максимален, то переводим символ заполнения 
+        # на следующий и переформируем остальные элементы
+        else
+            pref=$complete_leters${arr[$j]}
+            complete_leters=$complete_leters${arr[$j]}
+            j=$(($j + 1))
+            letter=${arr[$j]}
+            postf=${postf:1}
+            limit=$((249 - ${#arr[@]}))
+            if [ $j -eq ${#arr[@]} ]; then
+                break
+            fi
+        fi
+        mkdir ~/test/$pref$res$postf
         res=""
     done
 
 
     echo $count
 
-    res=$pref$res$postf
-    # mkdir $res
+    # res=$pref$res$postf
+    
 
 }
+
