@@ -1,33 +1,52 @@
 #!/bin/bash
 
-nameGen() {
-    path=$1
-    number=$2
-    str=$3
-
-    # парсим строку на массив уникальных букв
+parse_str() {
+    str=$1
+        # парсим строку на массив уникальных букв
     for (( i=0; i < ${#str}; i++ )) do
         if !(echo ${arr[@]} | grep -qw "${str:$i:1}") then
             arr+=(${str:$i:1})
         fi
     done
-    echo "|${arr[@]}|${#arr[@]}"
+    if [ $# -eq 2 ]; then
+        ext=""
+        arr+=(".")
+        echo ${arr}
+        # while [ ${arr: -1} != "." ]; do
+        #     ext=${arr: -1}$ext
+        #     arr
+        # done
 
+    fi
+
+}
+
+init() {
     res=""
-    # res=${res// /} # замена пробелов на ничто
     limit=$((250 - ${#arr[@]}))
-    
-    j=0
     pref=""
     letter=${arr[$j]}
     postf="${arr[@]}_$(date "+%d%m%y")"
     postf=${postf// /}
     postf=${postf:1}
+    j=0
     count=0
     complete_leters=""
+}
+
+nameGen() {
+    path=$1
+    number=$2
+    str=$3
+    ext=$4
+    parse_str $str $ext # arr
+    echo "|${arr[@]}|${#arr[@]}"
+    # вспомогательные аргументы
+    init
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             res=$letter$res
+            echo "$path$pref$res$postf" >> log.txt
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
@@ -51,15 +70,10 @@ nameGen() {
                 break
             fi
         fi
-        mkdir ~/test/$pref$res$postf
+        # mkdir $path$pref$res$postf
+        # touch $path$pref$res$postf.rr
         res=""
     done
-
-
     echo $count
-
-    # res=$pref$res$postf
-    
-
 }
 

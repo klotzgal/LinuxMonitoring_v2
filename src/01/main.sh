@@ -2,12 +2,20 @@
 . ./validator.sh
 . ./generate_name.sh
 
-valid $1 $2 $3 $4 $5 $6
+a=$1
+if [ ${a: -1} != "/" ]; then
+    a="$a/"
+fi
+
+valid $a $2 $3 $4 $5 $6
 if [ $? -eq 1 ]; then
     exit 1
 fi
 
-nameGen $1 $2 $3
+# nameGen $a $2 $3
+
+nameGen $a $2 $5 "f"
+
 
 # echo $res
 
