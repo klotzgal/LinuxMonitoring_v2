@@ -7,9 +7,9 @@ if [ $? -eq 1 ]; then
     exit 1
 fi
 
-nameGen "xxx" $3
+nameGen $1 $2 $3
 
-echo $res
+# echo $res
 
 
 for (( i=1; i <= 4; i++ )) do
