@@ -16,8 +16,8 @@ fi
 
 nameGen $a $2 $5 "f"
 
-
-# echo $res
+s=(${generated_names[@]})
+echo arr = ${s[224]}
 
 
 for (( i=1; i <= 4; i++ )) do
@@ -30,3 +30,4 @@ for (( i=1; i <= 4; i++ )) do
         echo
     fi
 done
+

@@ -10,11 +10,13 @@ parse_str() {
     done
     if [ $# -eq 2 ]; then
         ext=""
-        # arr+=(".")
         echo last =  ${arr[-1]}
         c=1
         while ([ ${arr[-$c]} != "." ] && [ $c -lt 7 ]) do
             ext=${arr[-$c]}$ext
+            arr=(${arr[@]})
+            echo ${arr[@]}
+            arr=(${arr[@]})
         echo ext = $ext, arr[-$c] = ${arr[-$c]}
         c=$(($c+1))
         done
@@ -44,10 +46,12 @@ nameGen() {
     echo "|${arr[@]}|${#arr[@]}"
     # вспомогательные аргументы
     init
+    generated_names=""
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             res=$letter$res
             echo "$path$pref$res$postf" >> log.txt
+            generated_names+=($path$pref$res$postf)
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
