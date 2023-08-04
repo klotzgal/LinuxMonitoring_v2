@@ -4,19 +4,20 @@ parse_str() {
     str=$1
         # парсим строку на массив уникальных букв
     for (( i=0; i < ${#str}; i++ )) do
-        if !(echo ${arr[@]} | grep -qw "${str:$i:1}") then
+        if (!(echo ${arr[@]} | grep -q "${str:$i:1}") || [ ${str:$i:1} == "." ]) then
             arr+=(${str:$i:1})
         fi
     done
     if [ $# -eq 2 ]; then
         ext=""
-        arr+=(".")
-        echo ${arr}
-        # while [ ${arr: -1} != "." ]; do
-        #     ext=${arr: -1}$ext
-        #     arr
-        # done
-
+        # arr+=(".")
+        echo last =  ${arr[-1]}
+        c=1
+        while ([ ${arr[-$c]} != "." ] && [ $c -lt 7 ]) do
+            ext=${arr[-$c]}$ext
+        echo ext = $ext, arr[-$c] = ${arr[-$c]}
+        c=$(($c+1))
+        done
     fi
 
 }
