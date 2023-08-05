@@ -2,31 +2,31 @@
 
 parse_str() {
     str=$1
-        # парсим строку на массив уникальных букв
-    for (( i=0; i < ${#str}; i++ )) do
-        if (!(echo ${arr[@]} | grep -q "${str:$i:1}") || [ ${str:$i:1} == "." ]) then
+    # парсим строку на массив уникальных букв
+    echo массив как строка ${str:3:1}
+    for (( i=0; (i < ${#str}); i++ )) do
+        if [ ${str:$i:1} == "." ]; then
+            i=$(($i+1))
+            break
+            # TODO: Убрать брейк 
+        elif !(echo ${arr[@]} | grep -q "${str:$i:1}" ) then
             arr+=(${str:$i:1})
         fi
     done
     if [ $# -eq 2 ]; then
         ext=""
-        echo last =  ${arr[-1]}
-        c=1
-        while ([ ${arr[-$c]} != "." ] && [ $c -lt 7 ]) do
-            ext=${arr[-$c]}$ext
-            arr=(${arr[@]})
-            echo ${arr[@]}
-            arr=(${arr[@]})
-        echo ext = $ext, arr[-$c] = ${arr[-$c]}
-        c=$(($c+1))
+        echo last = ${arr[-1]}
+        while [ $i -lt ${#str} ]; do
+            ext=${str:$i:1}$ext
+            i=$(($i+1))
         done
+        ext=.$ext
     fi
-
 }
 
 init() {
-    res=""
-    limit=$((250 - ${#arr[@]}))
+    filler=""
+    limit=$((250 - ${#arr[@]} - ${#ext}))
     pref=""
     letter=${arr[$j]}
     postf="${arr[@]}_$(date "+%d%m%y")"
@@ -35,29 +35,29 @@ init() {
     j=0
     count=0
     complete_leters=""
+    generated_names=""
 }
 
+# * Принимает путь, число папок, строку символов и генерировать имена файлов или папок 
 nameGen() {
     path=$1
     number=$2
     str=$3
-    ext=$4
-    parse_str $str $ext # arr
-    echo "|${arr[@]}|${#arr[@]}"
-    # вспомогательные аргументы
-    init
-    generated_names=""
+    is_file=$4
+    parse_str $str $is_file # arr, ext
+    echo "|${arr[@]}|${#arr[@]}|$ext|${#ext}"
+    init # вспомогательные аргументы
+    echo "" > log.txt
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
-            res=$letter$res
-            echo "$path$pref$res$postf" >> log.txt
-            generated_names+=($path$pref$res$postf)
+            filler=$letter$filler
+            echo "$path$pref$filler$postf$ext" >> log.txt
+            generated_names+=($path$pref$filler$postf$ext)
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
             fi
         done
-        # echo "$pref[$res]$postf"
         # увеличение префикса и уменьшения предела
         if ([ $limit -gt 2 ] && [ $j -ne 0 ]) then
             pref=$pref${arr[$(($j - 1))]}
@@ -73,11 +73,10 @@ nameGen() {
             limit=$((249 - ${#arr[@]}))
             if [ $j -eq ${#arr[@]} ]; then
                 break
+                # TODO: Убать брейк
             fi
         fi
-        # mkdir $path$pref$res$postf
-        # touch $path$pref$res$postf.rr
-        res=""
+        filler=""
     done
     echo $count
 }
