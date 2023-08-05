@@ -50,7 +50,8 @@ nameGen() {
                 generated_names+=($pref$filler$postf$ext)
             else
                 generated_names+=($path$pref$filler$postf$ext)
-            fi
+            fi 
+            # TODO: Убрать из названия папки путь
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
