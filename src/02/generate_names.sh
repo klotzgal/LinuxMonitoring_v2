@@ -39,18 +39,13 @@ init() {
 
 # * Принимает путь, число папок, строку символов и генерировать имена файлов или папок 
 nameGen() {
-    path=$1
-    number=$2
-    parse_str $3 $4 # arr, ext
+    number=$1
+    parse_str $2 $3 # arr, ext
     init # вспомогательные аргументы
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             filler=$letter$filler
-            if [ $# -eq 4 ]; then
                 generated_names+=($pref$filler$postf$ext)
-            else
-                generated_names+=($path$pref$filler$postf$ext)
-            fi
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break

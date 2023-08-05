@@ -1,0 +1,4 @@
+/bin
+/sbin
+/proc
+/sys

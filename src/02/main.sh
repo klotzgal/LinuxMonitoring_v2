@@ -5,7 +5,7 @@
 
 valid $1 $2 $3
 if [ $? -eq 0 ]; then
-    folders_and_files $path $2 $3 $4 $5 $6
+    folders_and_files $1 $2 $3
 fi
 
 

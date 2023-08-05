@@ -13,7 +13,7 @@ folders_and_files() {
             echo "$folder [$(date "+%d-%m-%Y")] " >> log.txt
             for file in ${all_files[@]} 
             do
-                fallocate -l $6KB $folder/$file &> /dev/null
+                fallocate -l ${6%??}KB $folder/$file &> /dev/null
                 echo "$folder/$file [$(date "+%d-%m-%Y")] ${6%??}KB" >> log.txt
             done
         fi
