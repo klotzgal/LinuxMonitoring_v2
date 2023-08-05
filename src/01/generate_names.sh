@@ -15,7 +15,6 @@ parse_str() {
     done
     if [ $# -eq 2 ]; then
         ext=""
-        echo last = ${arr[-1]}
         while [ $i -lt ${#str} ]; do
             ext=${str:$i:1}$ext
             i=$(($i+1))
@@ -43,9 +42,7 @@ nameGen() {
     path=$1
     number=$2
     parse_str $3 $4 # arr, ext
-    echo "|${arr[@]}|${#arr[@]}|$ext|${#ext}"
     init # вспомогательные аргументы
-    echo "" > log.txt
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             filler=$letter$filler
@@ -79,6 +76,5 @@ nameGen() {
         fi
         filler=""
     done
-    echo $count
 }
 
