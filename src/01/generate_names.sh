@@ -2,8 +2,8 @@
 
 parse_str() {
     str=$1
+    arr=()
     # парсим строку на массив уникальных букв
-    echo массив как строка ${str:3:1}
     for (( i=0; (i < ${#str}); i++ )) do
         if [ ${str:$i:1} == "." ]; then
             i=$(($i+1))
@@ -28,31 +28,32 @@ init() {
     filler=""
     limit=$((250 - ${#arr[@]} - ${#ext}))
     pref=""
+    j=0
     letter=${arr[$j]}
     postf="${arr[@]}_$(date "+%d%m%y")"
     postf=${postf// /}
     postf=${postf:1}
-    j=0
     count=0
     complete_leters=""
-    generated_names=""
+    generated_names=()
 }
 
 # * Принимает путь, число папок, строку символов и генерировать имена файлов или папок 
 nameGen() {
     path=$1
     number=$2
-    str=$3
-    is_file=$4
-    parse_str $str $is_file # arr, ext
+    parse_str $3 $4 # arr, ext
     echo "|${arr[@]}|${#arr[@]}|$ext|${#ext}"
     init # вспомогательные аргументы
     echo "" > log.txt
     while [ $count -lt $number ]; do
         for (( i=1; i < $limit; i++ )) do
             filler=$letter$filler
-            echo "$path$pref$filler$postf$ext" >> log.txt
-            generated_names+=($path$pref$filler$postf$ext)
+            if [ $# -eq 4 ]; then
+                generated_names+=($pref$filler$postf$ext)
+            else
+                generated_names+=($path$pref$filler$postf$ext)
+            fi
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
@@ -70,7 +71,7 @@ nameGen() {
             j=$(($j + 1))
             letter=${arr[$j]}
             postf=${postf:1}
-            limit=$((249 - ${#arr[@]}))
+            limit=$((248 - ${#arr[@]}))
             if [ $j -eq ${#arr[@]} ]; then
                 break
                 # TODO: Убать брейк
