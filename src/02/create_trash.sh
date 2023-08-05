@@ -14,7 +14,7 @@ folders_and_files() {
             for file in ${all_files[@]} 
             do
                 fallocate -l $6KB $folder/$file &> /dev/null
-                echo "$folder/$file [$(date "+%d-%m-%Y")] ${6%??}KB" >> log.txt
+                echo "$folder/$file [$(date "+%d-%m-%Y")] $6KB" >> log.txt
             done
         fi
     done
