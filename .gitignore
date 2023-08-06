@@ -54,3 +54,4 @@ dkms.conf
 # My
 .env
 */*/log.txt
+*/*/*.txt
