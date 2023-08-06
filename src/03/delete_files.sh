@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 del() {
     # cat ../01/log.txt | awk '{print $1}' | xargs rm
     all_filepath=($(cat ../02/log.txt | awk '{print $1}'))
