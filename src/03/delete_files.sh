@@ -46,10 +46,10 @@ datetime_valid() {
 
 time_del() {
     echo "Введите дату и время в формате \"$(date '+%Y-%m-%d %H:%M:%S')\""
-    read -p "Время начала:" start_time
-    read -p "Время конца:" end_time
-    start_time="2023-08-06 11:25:49"
-    end_time="2023-08-07 18:25:49"
+    # read -p "Время начала:" start_time
+    # read -p "Время конца:" end_time
+    start_time="2023-08-07 19:28:49"
+    end_time="2023-08-07 20:20:49"
 
     echo start $start_time
     echo end $end_time
@@ -57,11 +57,18 @@ time_del() {
     if [ $? -eq 0 ]; then
         datetime_valid "$end_time"
         if [ $? -eq 0 ]; then
-            all_filepath=($(find / -newermt "$start_time" -not -newermt "$end_time" \
-             2>/dev/null))
-            echo ${all_filepath[@]} > a.txt
-
-            # del 
+            echo "start/s $(date -d "$start_time" +%s)"
+            echo "end/s   $(date -d "$end_time" +%s)"
+            if [ $(date -d "$start_time" +%s) -le $(date -d "$end_time" +%s) ]; then
+                
+                all_filepath=($(find / -newermt "$start_time" -not -newermt "$end_time" \
+                2>/dev/null))
+                echo ${all_filepath[@]} > a.txt
+                del
+            else
+                echo "Время конца должно быть позже времени начала"
+            fi
+             
         else
             echo "Неверный формат даты конца"
         fi
@@ -74,13 +81,15 @@ del() {
     # echo $all_filepath
     for file in ${all_filepath[@]}
     do 
-        # if (echo "$file" | grep -E -q "/dev" ) then
+        if !(echo "$file" | grep -E -qe "/dev" -e "s/dev" -e "/proc" -e "LinuxMonitoring") then
+        # echo $file >> r.txt
+
         path=${file%/*} 
         cd ${file%/*} 
         rm -r ${file##*/}
         echo path
         echo ${file##*/}
-        # fi
+        fi
     done
 
 
