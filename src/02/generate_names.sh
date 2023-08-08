@@ -16,7 +16,7 @@ parse_str() {
     if [ $# -eq 2 ]; then
         ext=""
         while [ $i -lt ${#str} ]; do
-            ext=${str:$i:1}$ext
+            ext=$ext${str:$i:1}
             i=$(($i+1))
         done
         ext=.$ext
