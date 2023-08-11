@@ -8,7 +8,6 @@ parse_str() {
         if [ ${str:$i:1} == "." ]; then
             i=$(($i+1))
             break
-            # TODO: Убрать брейк 
         elif !(echo ${arr[@]} | grep -q "${str:$i:1}" ) then
             arr+=(${str:$i:1})
         fi
@@ -66,7 +65,6 @@ nameGen() {
             limit=$((248 - ${#arr[@]}))
             if [ $j -eq ${#arr[@]} ]; then
                 break
-                # TODO: Убать брейк
             fi
         fi
         filler=""

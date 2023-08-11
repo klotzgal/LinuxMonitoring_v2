@@ -2,11 +2,6 @@
 . ./validator.sh
 . ./delete_files.sh
 
-# cur_path=$(pwd)
-# del $1
-# cd $cur_path
-
-
 valid $1 $2 $3
 if [ $? -eq 0 ]; then
     if [ $1 -eq 1 ]; then

@@ -6,7 +6,6 @@
 
 valid $1 $2 $3
 if [ $? -eq 0 ]; then
-    # cur_time=$(date "+%H:%M:%S")
     echo "start time $(date "+%H:%M:%S")"
     echo "start time $(date "+%H:%M:%S")" >> log.txt
     while_df $1 $2 $3

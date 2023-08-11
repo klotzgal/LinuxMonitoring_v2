@@ -6,13 +6,12 @@ free_space() {
 }
 
 gen_all_path() {
-    echo -n "" > l.txt
     all_path=()
     for file in $(find / -type d -writable 2> /dev/null)
     do
-        if ([ $file != "/bin" ] && [ $file != "/sbin" ]) then
+    # ([ $file != "/bin" ] && [ $file != "/sbin" ])
+        if !(echo "$file" | grep -E -qe "/bin" -e "/sbin" -e "/dev" -e "LinuxMonitoring") then
             all_path+=($file)
-            echo $file >> all_path.txt
         fi
     done
 

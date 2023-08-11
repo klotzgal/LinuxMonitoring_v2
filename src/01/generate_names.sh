@@ -7,8 +7,7 @@ parse_str() {
     for (( i=0; (i < ${#str}); i++ )) do
         if [ ${str:$i:1} == "." ]; then
             i=$(($i+1))
-            break
-            # TODO: Убрать брейк 
+            break 
         elif !(echo ${arr[@]} | grep -q "${str:$i:1}" ) then
             arr+=(${str:$i:1})
         fi
@@ -51,7 +50,6 @@ nameGen() {
             else
                 generated_names+=($path$pref$filler$postf$ext)
             fi 
-            # TODO: Убрать из названия папки путь
             count=$(($count + 1))
             if [ $count -ge $number ]; then
                 break
@@ -72,7 +70,6 @@ nameGen() {
             limit=$((248 - ${#arr[@]}))
             if [ $j -eq ${#arr[@]} ]; then
                 break
-                # TODO: Убать брейк
             fi
         fi
         filler=""

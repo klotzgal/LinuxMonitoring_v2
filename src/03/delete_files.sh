@@ -46,30 +46,24 @@ datetime_valid() {
 
 time_del() {
     echo "Введите дату и время в формате \"$(date '+%Y-%m-%d %H:%M:%S')\""
-    # read -p "Время начала:" start_time
-    # read -p "Время конца:" end_time
-    start_time="2023-08-08 09:49:33"
-    end_time="2023-08-08 09:49:35"
-
-    echo start $start_time
-    echo end $end_time
+    read -p "Время начала: " start_time
+    read -p "Время конца: " end_time
     datetime_valid "$start_time"
     if [ $? -eq 0 ]; then
         datetime_valid "$end_time"
         if [ $? -eq 0 ]; then
-            # echo "start/s $(date -d "$start_time" +%s)"
-            # echo "end/s   $(date -d "$end_time" +%s)"
-            # TODO: Прибавление секунды к конечному времени
+            if [ "$start_time" == "$end_time" ]; then
+                end_time=$(date "+%Y-%m-%d %H:%M:%S" -d "$end_time + second")
+            fi
+            
             if [ $(date -d "$start_time" +%s) -le $(date -d "$end_time" +%s) ]; then
-                
+                end_time=$(date "+%Y-%m-%d %H:%M:%S" -d "$end_time + second")
                 all_filepath=($(find / -newermt "$start_time" -not -newermt "$end_time" \
                 2>/dev/null))
-                echo ${all_filepath[@]} > a.txt
-                del 2>/dev/null
+                del &>/dev/null
             else
                 echo "Время конца должно быть позже времени начала"
-            fi
-             
+            fi             
         else
             echo "Неверный формат даты конца"
         fi
@@ -79,35 +73,13 @@ time_del() {
 
 }
 del() {    
-    # echo $all_filepath
     for file in ${all_filepath[@]}
     do 
-        if !(echo "$file" | grep -E -qe "/dev" -e "s/dev" -e "/proc" -e "LinuxMonitoring") then
+        if !(echo "$file" | grep -E -qe "/dev" -e "/bin" -e "/proc" -e "LinuxMonitoring") then
         path=${file%/*} 
         cd ${file%/*} 
-        rm -r ${file##*/}
-        echo path
+        rm -rf ${file##*/}
         echo ${file##*/}
         fi
     done
-
-
-
-    # # cat ../01/log.txt | awk '{print $1}' | xargs rm
-    # all_filepath=($(cat ../02/log.txt | awk '{print $1}'))
-    # ahah=($(cat ../02/l.txt | awk '{print $1}'))
-    # for p in ${ahah[@]}
-    # do
-    #     for file in ${all_filepath[@]}
-    #     do
-    #     cd $p
-    #         rm -r ${file%%/*} 
-    #         # rm -r ${file##*/}
-    #         # echo path
-    #         # echo $(ls)
-    #         echo ${file##*/}
-    #     done
-    # done
-
-
 }
