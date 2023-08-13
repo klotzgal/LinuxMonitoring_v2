@@ -10,7 +10,7 @@ init_new_log() {
 one_day_log() {
     init_new_log
     log=${1////_}
-    echo "" > $log.log
+    echo -n "" > $log.log
     for (( i=0; i < $str_count;i++ )) do
         t=$(($i * $time_step))
         day_time=$(date -d "@$t" "+%H:%M:%S %z")
