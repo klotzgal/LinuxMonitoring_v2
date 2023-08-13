@@ -19,16 +19,3 @@ if [ $? -eq 0 ]; then
     rm output.log
 fi
 
-
-
-
-
-
-
-
-
-
-
-
-
-
