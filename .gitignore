@@ -56,3 +56,4 @@ dkms.conf
 */*/log.txt
 */*/*.txt
 */*/*.log
+*/*/*.html
