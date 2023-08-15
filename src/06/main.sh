@@ -28,7 +28,12 @@ parse_4() {
 valid $1 $2
 if [ $? -eq 0 ]; then
     parse_$1 
-    goaccess  -p $conf -f $log $flags -o "report$1.html" # $all_panels
+    read -p "Преобразовать отчет в HTML формат?: (Y/N) " res
+    if [ "$res" == "Y" ] || [ "$res" == "y" ] || [ "$res" == "yes" ]
+    then
+        HTML="-o report$1.html"
+    fi
+    goaccess  -p $conf -f $log $flags $HTML # $all_panels
 fi
 
 # all_panels=${all_panels// /}
