@@ -31,6 +31,16 @@
 !["Grafana"](../screens/7.2.png)
 !["Grafana"](../screens/7.3.png)
 6. Открыл в браузере http://http://localhost:30000/
+!["Grafana"](../screens/gr.png)
+7. Установил Prometheus
+- sudo apt install prometheus
+!["Prometheus"](../screens/7.4.png)
+8. Prometheus слушает порт 9090, который также необходимо пробросить на хост.
+!["Prometheus"](../screens/7.5.png)
+9. Открыл в браузере http://http://localhost:19090/
+!["Prometheus"](../screens/pr.png)
+
+
 
 
 
