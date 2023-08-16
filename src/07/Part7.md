@@ -14,17 +14,26 @@
     - sudo mkdir /var/lib/prometheus
     - for i in rules rules.d files_sd; do sudo mkdir -p /etc/prometheus/${i}; done -->
 
-    1. Установил NGINX и пакеты для компиляции, 
-    - sudo apt install nginx
-    - sudo apt-get install build-essential
-    - sudo apt-get install -y adduser libfontconfig1
-    2. Скачал Grafana на свой компьютер через ВПН, перекинул на виртуалку и распаковал архив.
-    - sudo dpkg -i grafana-enterprise_9.4.7_amd64.deb
-    3. Выполнил комманды, предложенные при установке
-    - sudo /bin/systemctl daemon-reload
-    - sudo /bin/systemctl enable grafana-server
+1. Установил NGINX и пакеты для компиляции, 
+- sudo apt install nginx
+- sudo apt-get install build-essential
+- sudo apt-get install -y adduser libfontconfig1
+2. Скачал Grafana на свой компьютер через ВПН, перекинул на виртуалку и распаковал архив.
+- sudo dpkg -i grafana-enterprise_9.4.7_amd64.deb
+3. Выполнил комманды, предложенные при установке
+- sudo /bin/systemctl daemon-reload
+- sudo /bin/systemctl enable grafana-server
 ### You can start grafana-server by executing
-    - sudo /bin/systemctl start grafana-server
+4. Запустил сервер Grafana
+- sudo /bin/systemctl start grafana-server
+!["Grafana"](../screens/7.1.png)
+5. Grafana запущена использует порт 3000, который нужно соединить с портом на локальной машине.
+!["Grafana"](../screens/7.2.png)
+!["Grafana"](../screens/7.3.png)
+6. Открыл в браузере http://http://localhost:30000/
+
+
+
 
 ##### Добавить на дашборд **Grafana** отображение ЦПУ, доступной оперативной памяти, свободное место и кол-во операций ввода/вывода на жестком диске
 
