@@ -61,6 +61,23 @@
 Собственно, зачем составлять собственный дашборд, если, как говорится, "всё уже украдено до нас"?
 Почему бы не взять готовый дашборд, на котором есть все нужные метрики?
 
+1. Скачал Node explorer
+- wget https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
+- tar xvfz node_exporter-1.2.2.linux-amd64.tar.gz
+2. Создал Node Exporter Server
+- cd node_exporter-1.2.2.linux-amd64/
+- `sudo touch /etc/systemd/system/node_exporter.service | sudo vim /etc/systemd/system/node_exporter.service`
+!["Node_explorer"](../screens/8.6.png)
+- sudo /bin/systemctl daemon-reload
+- sudo systemctl restart node_exporter
+- 
+
+
+
+
+
+
+
 **== Задание ==**
 
 ##### Установить готовый дашборд *Node Exporter Quickstart and Dashboard* с официального сайта **Grafana Labs**

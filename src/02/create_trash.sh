@@ -30,14 +30,14 @@ folders_and_files() {
         if [ $(free_space) -le 1024 ]; then
             break
         fi
-        echo "$path/$folder [$(date "+%d-%m-%Y")] " >> log.txt
+        echo "$path/$folder [$(date "+%d-%m-%Y")] " >> log.log
         mkdir $path/$folder &> /dev/null
         for file in ${all_files[@]} 
         do
             if [ $(free_space) -le 1024 ]; then
                 break
             fi
-            echo "$path/$folder/$file [$(date "+%d-%m-%Y")] ${size%??}MB" >> log.txt
+            echo "$path/$folder/$file [$(date "+%d-%m-%Y")] ${size%??}MB" >> log.log
             fallocate -l ${size%??}MB $path/$folder/$file &> /dev/null 
         done
     done

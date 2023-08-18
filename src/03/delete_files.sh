@@ -1,11 +1,10 @@
 #!/bin/bash
 
 log_del() {
-    all_filepath=($(cat ../02/log.txt | awk '{print $1}'))
+    all_filepath=($(cat ../02/log.log | awk '{print $1}'))
     cur_path=$(pwd)
     del &> /dev/null
     cd $cur_path
-    echo  "" > ../02/log.txt
 }
 
 mask_del() {
