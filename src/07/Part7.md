@@ -7,14 +7,7 @@
 ##### Установить и настроить **Prometheus** и **Grafana** на виртуальную машину
 ##### Получить доступ к веб интерфейсам **Prometheus** и **Grafana** с локальной машины
 
-    <!-- 1. Создал группу и пользователя
-    - sudo groupadd prometheus
-    - sudo useradd -s /sbin/nologin --system -g prometheus prometheus
-    2. Создал католог пользователя 
-    - sudo mkdir /var/lib/prometheus
-    - for i in rules rules.d files_sd; do sudo mkdir -p /etc/prometheus/${i}; done -->
-
-1. Установил NGINX и пакеты для компиляции, 
+1. Установил NGINX и дополнительные пакеты, 
 - sudo apt install nginx
 - sudo apt-get install build-essential
 - sudo apt-get install -y adduser libfontconfig1
@@ -23,85 +16,49 @@
 3. Выполнил комманды, предложенные при установке
 - sudo /bin/systemctl daemon-reload
 - sudo /bin/systemctl enable grafana-server
-### You can start grafana-server by executing
 4. Запустил сервер Grafana
 - sudo /bin/systemctl start grafana-server
-!["Grafana"](../screens/7.1.png)
+!["Grafana"](../../misc/images/screens/7.1.png)
 5. Grafana запущена использует порт 3000, который нужно соединить с портом на локальной машине.
-!["Grafana"](../screens/7.2.png)
-!["Grafana"](../screens/7.3.png)
+!["Grafana"](../../misc/images/screens/7.2.png)
+!["Grafana"](../../misc/images/screens/7.3.png)
 6. Открыл в браузере http://http://localhost:30000/
-!["Grafana"](../screens/gr.png)
+!["Grafana"](../../misc/images/screens/gr.png)
 7. Установил Prometheus
 - sudo apt install prometheus
-!["Prometheus"](../screens/7.4.png)
+!["Prometheus"](../../misc/images/screens/7.4.png)
 8. Prometheus слушает порт 9090, который также необходимо пробросить на хост.
-!["Prometheus"](../screens/7.5.png)
+!["Prometheus"](../../misc/images/screens/7.5.png)
 9. Открыл в браузере http://http://localhost:19090/
-!["Prometheus"](../screens/pr.png)
-
-
-
-
+!["Prometheus"](../../misc/images/screens/pr.png)
 
 
 ##### Добавить на дашборд **Grafana** отображение ЦПУ, доступной оперативной памяти, свободное место и кол-во операций ввода/вывода на жестком диске
+
+1. Добавил:
+    - CPU
+    !["Dashboard"](../../misc/images/screens/7.6.png)
+    - RAM
+    !["Dashboard"](../../misc/images/screens/7.7.png)
+    - Free space
+    !["Dashboard"](../../misc/images/screens/7.8.png)
+    - IOPS (кол-во операций ввода/вывода на жестком диске)
+    !["Dashboard"](../../misc/images/screens/7.9.png)
+    - Также дополнительно добавил процент занятого места на диске
+    !["Dashboard"](../../misc/images/screens/7.10.png)
+
+
 
 
 
 ##### Запустить ваш bash-скрипт из [Части 2](#part-2-засорение-файловой-системы)
 ##### Посмотреть на нагрузку жесткого диска (место на диске и операции чтения/записи)
+1. После запуска
+    !["Script"](../../misc/images/screens/7.11.png)
+2. После отчистки
+    !["Script"](../../misc/images/screens/7.12.png)
 
 ##### Установить утилиту **stress** и запустить команду `stress -c 2 -i 1 -m 1 --vm-bytes 32M -t 10s`
 ##### Посмотреть на нагрузку жесткого диска, оперативной памяти и ЦПУ
-
-
-## Part 8. Готовый дашборд
-
-Собственно, зачем составлять собственный дашборд, если, как говорится, "всё уже украдено до нас"?
-Почему бы не взять готовый дашборд, на котором есть все нужные метрики?
-
-1. Скачал Node explorer
-- wget https://github.com/prometheus/node_exporter/releases/download/v1.2.2/node_exporter-1.2.2.linux-amd64.tar.gz
-- tar xvfz node_exporter-1.2.2.linux-amd64.tar.gz
-2. Создал Node Exporter Server
-- cd node_exporter-1.2.2.linux-amd64/
-- `sudo touch /etc/systemd/system/node_exporter.service | sudo vim /etc/systemd/system/node_exporter.service`
-!["Node_explorer"](../screens/8.6.png)
-- sudo /bin/systemctl daemon-reload
-- sudo systemctl restart node_exporter
-- 
-
-
-
-
-
-
-
-**== Задание ==**
-
-##### Установить готовый дашборд *Node Exporter Quickstart and Dashboard* с официального сайта **Grafana Labs**
-
-##### Провести те же тесты, что и в [Части 7](#part-7-prometheus-и-grafana)
-
-##### Запустить ещё одну виртуальную машину, находящуюся в одной сети с текущей
-##### Запустить тест нагрузки сети с помощью утилиты **iperf3**
-
-##### Посмотреть на нагрузку сетевого интерфейса
-
-
-## Part 9. Дополнительно. Свой *node_exporter*
-
-Анализировать систему с помощью специальных утилит полезно и удобно, но Джону всегда хотелось понять, как же они работают.
-
-**== Задание ==**
-
-Написать bash-скрипт или программу на Си, которая собирает информацию по базовым метрикам системы (ЦПУ, оперативная память, жесткий диск (объем)).
-Скрипт или программа должна формировать html страничку по формату **Prometheus**, которую будет отдавать **nginx**. \
-Саму страничку обновлять можно как внутри bash-скрипта или программы (в цикле), так и при помощи утилиты cron, но не чаще, чем раз в 3 секунды.
-
-##### Поменять конфигурационный файл **Prometheus**, чтобы он собирал информацию с созданной вами странички.
-
-##### Провести те же тесты, что и в [Части 7](#part-7-prometheus-и-grafana)
-
-
+После запуска утилиты stress
+    !["stress"](../../misc/images/screens/7.13.png)
