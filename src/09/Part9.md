@@ -15,7 +15,12 @@
 3. Добавил в prometheus.yml новый job
 !["NGINX"](../../misc/images/screens/9.3.png)
 4. Перезапустил NGINX и Prometheus
-5. 
+5. Проверил Prometheus
+!["Prometheus"](../../misc/images/screens/9.4.png)
+6. Написал start.sh, который размещает конфиги в нужных папках и запускает обновление страницы.
+Запускать его следует с sudo для того, чтобы были права на редактирование папок и перезапуска NGINX и Prometheus.
+7.
+
 
 ##### Провести те же тесты, что и в [Части 7](#part-7-prometheus-и-grafana)
 
