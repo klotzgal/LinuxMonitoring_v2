@@ -19,9 +19,16 @@
 !["Prometheus"](../../misc/images/screens/9.4.png)
 6. Написал start.sh, который размещает конфиги в нужных папках и запускает обновление страницы.
 Запускать его следует с sudo для того, чтобы были права на редактирование папок и перезапуска NGINX и Prometheus.
-7.
+7. Создал в Grafana дашборд на подобии пункта 7, использующий полученные метрики.
+!["Dashboard "](../../misc/images/screens/9.5.png)
+
 
 
 ##### Провести те же тесты, что и в [Части 7](#part-7-prometheus-и-grafana)
-
+1. Запуск скрипта из 2 части
+!["Test"](../../misc/images/screens/9.test1.png)
+2. Отчистка скрипта
+!["Test"](../../misc/images/screens/9.test2.png)
+3. stress -c 2 -i 1 -m 1 --vm-bytes 32M -t 10s
+!["Test"](../../misc/images/screens/9.test3.png)
 
